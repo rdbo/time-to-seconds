@@ -7,19 +7,18 @@
             {
                 time_list = time_str.split(":");
                 time_list = time_list.reverse();
-                
+
                 secs = 0;
-                i = 0;
 
                 if(time_list.length == 0)
                     time_list[0] = time_str;
 
-                while(i < time_list.length)
+                for(i = 0; i < time_list.length; i++)
                 {
                     cur_number = Number(time_list[i]);
                     if(cur_number === NaN)
                     {
-                        i = -1;
+                        secs = -1;
                         break;
                     }
 
@@ -42,8 +41,6 @@
                     {
                         secs += Number(time_list[i]) * (10 ** (i - 5)) * 365 * 24 * (60 ** 2);
                     }
-
-                    i++;
                 }
 
                 return secs;
