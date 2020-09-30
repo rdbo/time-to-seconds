@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript">
+
+            function time_to_secs(time_str)
+            {
+                time_list = time_str.split(":");
+                time_list = time_list.reverse();
+                
+                secs = 0;
+                i = 0;
+
+                if(time_list.length == 0)
+                    time_list[0] = time_str;
+
+                while(i < time_list.length)
+                {
+                    cur_number = Number(time_list[i]);
+                    if(cur_number === NaN)
+                    {
+                        i = -1;
+                        break;
+                    }
+
+                    if(i < 3) //minutes, seconds, hours
+                    {
+                        secs += Number(time_list[i]) * (60 ** i);
+                    }
+
+                    else if(i == 3) //days
+                    {
+                        secs += Number(time_list[i]) * 24 * (60 ** 2);
+                    }
+
+                    else if(i == 4) //monthes (30 days each)
+                    {
+                        secs += Number(time_list[i]) * 30 * 24 * (60 ** 2);
+                    }
+
+                    else if(i > 4) //years, decades, centuries...
+                    {
+                        secs += Number(time_list[i]) * (10 ** (i - 5)) * 365 * 24 * (60 ** 2);
+                    }
+
+                    i++;
+                }
+
+                return secs;
+            }
+
+            function btn_onclick()
+            {
+                input_box = document.getElementById("input_box");
+                time = time_to_secs(input_box.value);
+                msg = `Time: ${time}`;
+                if(time == -1) msg = `Invalid time string: ${input_box.value}`;
+
+                alert(msg);
+            }
+        </script>
+    </head>
+
+    <body>
+        <input type="text" id="input_box" />
+        <button onclick="btn_onclick()">Submit</button>
+    </body>
+</html>
